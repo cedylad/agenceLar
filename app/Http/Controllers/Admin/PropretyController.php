@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\PropretyFormRequest;
+use App\Models\Option;
 use App\Models\Proprety;
 use Illuminate\Http\Request;
 use PhpParser\Builder\Property;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PropretyFormRequest;
 
 class PropretyController extends Controller
 {
@@ -37,8 +38,8 @@ class PropretyController extends Controller
         ]);
 
         return view('admin.properties.form', [
-            'proprety' => $proprety
-
+            'proprety' => $proprety,
+            'options' => Option::pluck('name', 'id')
         ]);
     }
 
@@ -48,6 +49,7 @@ class PropretyController extends Controller
     public function store(PropretyFormRequest $request)
     {
         $proprety = Proprety::create($request->validated());
+        $proprety->options()->sync($request->validated('options'));
         return to_route('admin.proprety.index')->with('success', 'Le bien a été créer');
     }
 
@@ -58,7 +60,8 @@ class PropretyController extends Controller
     public function edit(Proprety $proprety)
     {
         return view('admin.properties.form', [
-            'proprety' => $proprety
+            'proprety' => $proprety,
+            'options' => Option::pluck('name', 'id')
         ]);
     }
 
@@ -68,6 +71,7 @@ class PropretyController extends Controller
     public function update(PropretyFormRequest $request, Proprety $proprety)
     {
         $proprety->update($request->validated());
+        $proprety->options()->sync($request->validated('options'));
         return to_route('admin.proprety.index')->with('success', 'Le bien a bien été modifié');
     }
 

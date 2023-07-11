@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Proprety extends Model
 {
@@ -20,6 +21,11 @@ class Proprety extends Model
         'city',
         'address',
         'postal_code',
-        'sold'
+        'sold',
     ];
+
+    public function options(): BelongsToMany
+    {
+        return $this->belongsToMany(Option::class);
+    }
 }

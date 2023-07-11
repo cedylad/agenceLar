@@ -30,7 +30,8 @@
         @include('shared.input', ['class' => 'col', 'name' =>'city', 'label' => 'Ville', 'value' => $proprety->city])
         @include('shared.input', ['class' => 'col', 'name' =>'postal_code', 'label' => 'Code postal', 'value' => $proprety->postal_code])
     </div>
-    @include('shared.checkbox', ['name' =>'sold', 'label' => 'Vendu', 'value' => $proprety->sold])
+    @include('shared.select', ['name' =>'options', 'label' => 'Options', 'value' => $proprety->options()->pluck('id'), 'multiple' => true])
+    @include('shared.checkbox', ['name' =>'sold', 'label' => 'Vendu', 'value' => $proprety->sold, 'options' => $options])
     <div>
         <button class="btn btn-primary">
             @if($proprety->exists)
@@ -40,8 +41,6 @@
             @endif
         </button>
     </div>
-
-
 </form>
 
 @endsection
