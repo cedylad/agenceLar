@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PropretyContactRequest;
 use App\Models\Proprety;
 use Illuminate\Http\Request;
 use App\Http\Requests\SerachPropretiesRequest;
@@ -43,5 +44,9 @@ class PropretyController extends Controller
         return view('proprety.show', [
             'proprety' => $proprety
         ]);
+    }
+
+    public function contact(Proprety $proprety, PropretyContactRequest $request)
+    {
     }
 }

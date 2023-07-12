@@ -26,6 +26,10 @@ Route::get('/biens/{slug}-{proprety}', [\App\Http\Controllers\PropretyController
     'slug' => $slugregex
 ]);
 
+Route::post('/biens/{proprety}/contact', [\App\Http\Controllers\PropretyController::class, 'contact'])->name('proprety.contact')->where([
+    'proprety' => $idRegex
+]);
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('proprety', \App\Http\Controllers\Admin\PropretyController::class)->except(['show']);
     Route::resource('option', OptionController::class)->except(['show']);
