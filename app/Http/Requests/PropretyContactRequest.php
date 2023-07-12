@@ -25,7 +25,7 @@ class PropretyContactRequest extends FormRequest
             'lastname' => ['required', 'string', 'min:2'],
             'firstname' => ['required', 'string', 'min:2'],
             'phone' => ['required', 'string', 'min:10'],
-            'email' => ['required', 'email', 'min4'],
+            'email' => ['required', 'email', 'min:4'],
             'message' => ['required', 'string', 'min:4'],
         ];
     }

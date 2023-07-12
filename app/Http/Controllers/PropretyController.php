@@ -6,6 +6,8 @@ use App\Http\Requests\PropretyContactRequest;
 use App\Models\Proprety;
 use Illuminate\Http\Request;
 use App\Http\Requests\SerachPropretiesRequest;
+use App\Mail\PropretyContactMail;
+use Illuminate\Support\Facades\Mail;
 
 class PropretyController extends Controller
 {
@@ -48,5 +50,7 @@ class PropretyController extends Controller
 
     public function contact(Proprety $proprety, PropretyContactRequest $request)
     {
+        Mail::send(new PropretyContactMail($proprety, $request->validated()));
+        return back()->with('success', 'Votre message a bien été envoyé');
     }
 }
