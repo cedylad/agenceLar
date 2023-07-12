@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\OptionController;
 use App\Http\Controllers\PropretyController;
+use App\Http\Controllers\Admin\OptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,15 @@ Route::post('/biens/{proprety}/contact', [\App\Http\Controllers\PropretyControll
     'proprety' => $idRegex
 ]);
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])
+    ->middleware('guest')
+    ->name('login');
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'doLogin']);
+Route::delete('/logout', [App\Http\Controllers\AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('proprety', \App\Http\Controllers\Admin\PropretyController::class)->except(['show']);
     Route::resource('option', OptionController::class)->except(['show']);
 });

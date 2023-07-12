@@ -11,6 +11,13 @@
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
     <!-- FIN TOM SELECT -->
     <title>@yield('title') | Administration</title>
+    <style>
+        @layer reset {
+            button {
+                all: unset;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -35,15 +42,34 @@
                         <a href="{{ route('admin.option.index') }}" @class(['nav-link', 'active'=> str_contains($route, 'option.' )])>Gérer les options</a>
                     </li>
                 </ul>
+
+                <div class="ms-auto">
+
+                    @auth
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="post">
+
+                                @csrf
+                                @method("delete")
+
+                                <button class="nav-link">Se déconecter</button>
+                            </form>
+                        </li>
+                    </ul>
+                    @endauth
+                </div>
+
             </div>
         </div>
     </nav>
 
 
     <div class="container mt-5">
+
         @include('shared.flash')
 
-        @yield('content')
 
     </div>
 
